@@ -1,21 +1,31 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { CustomPreloadingStrategy } from 'src/app/app-preload-strategy';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'user',
     pathMatch: 'full'
   },
+  {
+    path: 'user',
+    loadChildren: () => import('src/app/user/user.module').then(m => m.UserModule),
+    data: { preload: true }
+  },
+  {
+    path: 'room',
+    loadChildren: () => import('src/app/room/room.module').then(m => m.RoomModule),
+    data: { preload: false }
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { 
+      preloadingStrategy: CustomPreloadingStrategy,
+      enableTracing: false
+    })
   ],
   exports: [RouterModule]
 })

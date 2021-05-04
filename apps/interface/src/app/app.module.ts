@@ -7,6 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'apps/interface/src/environments/environment';
+import { CustomPreloadingStrategy } from 'src/app/app-preload-strategy';
 
 // Import the AngularFire Module
 import { AngularFireModule } from '@angular/fire';
@@ -24,10 +25,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFirestoreModule
   ],
   providers: [
-    {
-      provide: [RouteReuseStrategy],
-      useClass: IonicRouteStrategy,
-    },
+    CustomPreloadingStrategy,
+    { 
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    }
   ],
   bootstrap: [AppComponent],
 })
