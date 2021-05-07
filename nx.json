@@ -11,9 +11,5 @@
       "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
-  "projects": {
-    "interface": { "tags": [] },
-    "interface-e2e": { "tags": [], "implicitDependencies": ["interface"] },
-    "api": { "tags": [] }
-  }
+  "projects": { "api": { "tags": [] } }
 }
