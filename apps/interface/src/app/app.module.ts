@@ -13,6 +13,7 @@ import { CustomPreloadingStrategy } from 'src/app/app-preload-strategy';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { FirebaseService } from 'apps/interface/src/app/services/firebase.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -29,7 +30,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     { 
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
-    }
+    },
+    FirebaseService
   ],
   bootstrap: [AppComponent],
 })
