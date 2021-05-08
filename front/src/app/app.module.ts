@@ -6,7 +6,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CustomPreloadingStrategy } from './app-preload-strategy';
+import { CustomPreloadingStrategy } from 'src/app/app-preload-strategy';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +22,8 @@ import { CustomPreloadingStrategy } from './app-preload-strategy';
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy
     },
-    CustomPreloadingStrategy
+    CustomPreloadingStrategy,
+    FirebaseService
   ],
   bootstrap: [
     AppComponent
