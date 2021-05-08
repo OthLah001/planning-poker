@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start:front": "cd front && npm start -- --port 7888",
+    "install:firsttime:front": "cd front && npm cache clean --force && npm i",
+    "install:front": "cd front && npm i"
+  }
+}
