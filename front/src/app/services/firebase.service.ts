@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentReference, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { Observable } from "rxjs";
 
 @Injectable({
@@ -11,17 +11,27 @@ export class FirebaseService {
         private db: AngularFirestore
     ) { }
 
-    getCollection(collection: string): Observable<any> {
+    /*
+       FireStore documentation https://firebase.google.com/docs/firestore/query-data/get-data
+    */
+
+    getCollection(collection: string): Observable<QuerySnapshot<any>> {
         return this.db.collection(collection).get();
     }
 
-    getDocument(collection: string, document: string): Observable<any> {
+    getCollectionWithCond(collection: string, cond: { field: string, op: any, value: any, orderBy: string }): Observable<QuerySnapshot<any>> {
+        return this.db.collection(
+            collection,
+            ref => ref.where(cond.field, cond.op, cond.value).orderBy(cond.orderBy)
+        ).get();
+    }
+
+    getDocument(collection: string, document: string): Observable<QueryDocumentSnapshot<any>> {
         return this.db.collection(collection).doc(document).get();
     }
 
-    setDocument(collection: string, model: any) {
+    setDocument(collection: string, model: any): Promise<DocumentReference<any>> {
         return this.db.collection(collection).add(model);
     }
 
-    // add the rest of CRUD
 }

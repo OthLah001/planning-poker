@@ -8,6 +8,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CustomPreloadingStrategy } from 'src/app/app-preload-strategy';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { environment } from 'src/environments/environment';
+
+// Import the AngularFire Module
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +21,10 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   providers: [
     { 
