@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyBjNnH_UC9Ks4hWIFT1seq0zr1_tjuzZKA',
-    authDomain: 'planning-poker-275be.firebaseapp.com',
-    projectId: 'planning-poker-275be',
-    storageBucket: 'planning-poker-275be.appspot.com',
-    messagingSenderId: '849839946549',
-    appId: '1:849839946549:web:bce8a52efd2952d313ea7c',
+    apiKey: "AIzaSyDdwg8RNsOkN9WfyJ0IbBgzzEEUu5kGRK0",
+    authDomain: "planning-poker-001.firebaseapp.com",
+    projectId: "planning-poker-001",
+    storageBucket: "planning-poker-001.appspot.com",
+    messagingSenderId: "644963075266",
+    appId: "1:644963075266:web:abbb8f4a73b1ca30ece75b"
   },
 };
 
