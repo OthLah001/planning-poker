@@ -61,30 +61,12 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    /* if(this.form.invalid) {
+    if(this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const newUser = this.form.value;
-    this.firebaseService
-      .getCollectionWithCond(
-        'users',
-        {
-          field: "email",
-          op: '==',
-          value: newUser.email
-        }
-      ).subscribe(users => {
-        if (users.docs.length > 0)  this.form.get('email').setErrors({ existingEmail: true });
-        else {
-          this.form.get('email').setErrors(null);
-          
-        }
-      }); */
-    
-    /* const user = this.firebaseService.signUp('oth@gmail.com', 'helloPassword');
-    console.log('user: ', user) */
+    console.log('Form is valid')
   }
 
   ngOnDestroy() {

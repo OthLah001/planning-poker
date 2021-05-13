@@ -6,7 +6,9 @@ import {
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import firebase from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +60,19 @@ export class FirebaseService {
     return this.db.collection(collection).add(model);
   }
 
-  async signUp(email: string, password: string) {
-    return await this.auth.createUserWithEmailAndPassword(email, password);
+  signUp(email: string, password: string): Observable<any> {
+    return from(this.auth.createUserWithEmailAndPassword(email, password));
+  }
+
+  setCurrentUser(data: { [key: string]: string }): Observable<any> {
+    return this.auth.user.pipe(
+      tap(user => {
+        const newUser = Object.assign({}, user);
+        for(const key of Object.keys(data))
+          newUser[key] = data[key]
+        console.log('user: ', user)
+        return this.auth.updateCurrentUser(newUser)
+      })
+    );
   }
 }
