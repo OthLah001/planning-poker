@@ -1,5 +1,9 @@
 import { Routes } from "@angular/router";
 import { SignupComponent } from "src/app/modules/user/components/signup/signup.component";
+import { SettingsComponent } from "src/app/modules/user/components/settings/settings.component";
+import { PersonalInfoComponent } from "src/app/modules/user/components/personal-info/personal-info.component";
+import { EditPasswordComponent } from "src/app/modules/user/components/edit-password/edit-password.component";
+import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
 
 
 export const userRoutes: Routes = [
@@ -11,5 +15,28 @@ export const userRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'personal-info',
+        pathMatch: 'full'
+      },
+      {
+        path: 'personal-info',
+        component: PersonalInfoComponent
+      },
+      {
+        path: 'edit-password',
+        component: EditPasswordComponent
+      },
+      {
+        path: 'payment-info',
+        component: PaymentInfoComponent
+      }
+    ]
   }
 ];
