@@ -64,15 +64,23 @@ export class FirebaseService {
     return from(this.auth.createUserWithEmailAndPassword(email, password));
   }
 
-  setCurrentUser(data: { [key: string]: string }): Observable<any> {
-    return this.auth.user.pipe(
-      tap(user => {
-        const newUser = Object.assign({}, user);
-        for(const key of Object.keys(data))
-          newUser[key] = data[key]
-        console.log('user: ', user)
-        return this.auth.updateCurrentUser(newUser)
-      })
+  updateCurrentUserProfile(displayName: string): Observable<any> {
+    return from(
+      this.auth.currentUser.then(
+        user => user.updateProfile({ displayName })
+      )
     );
+  }
+
+  sendVerificationEmailToCCurrentUser(): Observable<any> {
+    return from(
+      this.auth.currentUser.then(
+        user => user.sendEmailVerification()
+      )
+    );
+  }
+
+  logOutCurrentUser(): Observable<any> {
+    return from(this.auth.signOut());
   }
 }
