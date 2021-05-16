@@ -1,5 +1,5 @@
 <ion-content *ngIf="dataLoaded">
-  <form [formGroup]="form">
+  <form [formGroup]="form" *ngIf="stillInCreation; else userSignedUp">
     <mat-form-field appearance="standard">
       <mat-label>Email</mat-label>
       <input type="email" matInput required placeholder="email@example.com" formControlName="email" />
@@ -49,4 +49,11 @@
       <button mat-flat-button color="primary" (click)="submit()">Sign up</button>
     </div>
   </form>
+
+  <ng-template #userSignedUp>
+    <div>
+      <h1>ACCOUNT CREATED. CHECK YOUR EMAIL FOR ACTIVATION</h1>
+      <a>Do to dashboard</a>
+    </div>
+  </ng-template>
 </ion-content>

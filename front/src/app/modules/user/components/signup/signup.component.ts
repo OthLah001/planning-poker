@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { emailPattern } from 'src/app/modules/user/utils/user.patterns';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'signup',
@@ -16,14 +17,15 @@ import { emailPattern } from 'src/app/modules/user/utils/user.patterns';
 export class SignupComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public dataLoaded: boolean = false;
-
   public hidePassword: boolean = true;
+  public stillInCreation: boolean = true;
 
   private subs: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private generalService: GeneralService
   ) {}
 
   ngOnInit() {
@@ -66,7 +68,43 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log('Form is valid')
+    const newUser = this.form.value;
+    this.subs.add(
+      this.firebaseService.signUp(newUser.email, newUser.password1).subscribe(
+        user => {
+          this.form.get('email').setErrors(null);
+          this.updateProfile(newUser.displayName);
+        },
+        error => {
+          this.generalService.showSnackBar('An error has been occured while creating your account.');
+          this.form.get('email').setErrors({ existingEmail: true });
+        }
+      )
+    );
+  }
+
+  updateProfile(displayName: string) {
+    this.subs.add(
+      this.firebaseService.updateCurrentUserProfile(displayName).subscribe(
+        success => this.sendVerificationEmail(),
+        error => {
+          this.generalService.showSnackBar('An error has been occured while creating your display name.');
+          this.sendVerificationEmail();
+        }
+      )
+    );
+  }
+
+  sendVerificationEmail() {
+    this.subs.add(
+      this.firebaseService.sendVerificationEmailToCCurrentUser().subscribe(
+        sucess => this.stillInCreation = false,
+        error => {
+          this.generalService.showSnackBar('An error has been occured while sending you an email activation.');
+          // TO-DO: redirect to a specific page (dashboard)
+        }
+      )
+    );
   }
 
   ngOnDestroy() {
