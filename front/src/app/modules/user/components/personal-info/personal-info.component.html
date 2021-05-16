@@ -1,0 +1,26 @@
+<ion-content style="height: 100vh;" *ngIf="dataLoaded">
+  <form [formGroup]="form">
+    <mat-form-field appearance="standard">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput required formControlName="email" readonly />
+      <mat-error *ngIf="form.get('email').hasError('required') && form.get('email').touched">
+        This field is required
+      </mat-error>
+      <mat-error *ngIf="form.get('email').hasError('pattern') && form.get('email').touched">
+        Invalid email
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Display name</mat-label>
+      <input type="text" matInput required placeholder="myName" formControlName="displayName" />
+      <mat-error *ngIf="form.get('displayName').hasError('required') && form.get('displayName').touched">
+        This field is required
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button mat-flat-button color="primary" (click)="save()">Save</button>
+    </div>
+  </form>
+</ion-content>

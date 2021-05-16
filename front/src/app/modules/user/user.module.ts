@@ -8,10 +8,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'; 
+import { SettingsComponent } from "src/app/modules/user/components/settings/settings.component";
+import { PersonalInfoComponent } from "src/app/modules/user/components/personal-info/personal-info.component";
+import { IonicModule } from "@ionic/angular";
+import { EditPasswordComponent } from "src/app/modules/user/components/edit-password/edit-password.component";
+import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
 
 @NgModule({
   imports: [
     CommonModule,
+    IonicModule,
     FormsModule,
     RouterModule.forChild(userRoutes),
     ReactiveFormsModule,
@@ -21,7 +27,11 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   declarations: [
-    SignupComponent
+    SignupComponent,
+    SettingsComponent,
+    PersonalInfoComponent,
+    EditPasswordComponent,
+    PaymentInfoComponent
   ],
   providers: [
     
