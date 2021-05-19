@@ -93,6 +93,26 @@ export class FirebaseService {
     );
   }
 
+  getNewCredentialsByEmailAndPassword(email, password): firebase.auth.AuthCredential {
+    return firebase.auth.EmailAuthProvider.credential(email, password);
+  }
+
+  reSignInWithCredential(credential: firebase.auth.AuthCredential): Observable<any> {
+    return from(
+      this.auth.currentUser.then(
+        user => user.reauthenticateWithCredential(credential)
+      )
+    );
+  }
+
+  editCurrentUserPassword(password): Observable<any> {
+    return from(
+      this.auth.currentUser.then(
+        user => user.updatePassword(password)
+      )
+    );
+  }
+
   logOutCurrentUser(): Observable<any> {
     return from(this.auth.signOut());
   }

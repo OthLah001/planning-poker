@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Subscription } from 'rxjs';
-import { emailPattern } from 'src/app/modules/user/utils/user.patterns';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'edit-password',
@@ -17,11 +18,27 @@ export class EditPasswordComponent implements OnInit, OnDestroy {
   public dataLoaded: boolean = false;
   public hidePassword: boolean = true;
 
+  private email: string = '';
   private subs: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private firebaseService: FirebaseService,
+    private generalService: GeneralService
+  ) {}
 
   ngOnInit() {
+    this.subs.add(
+      this.firebaseService
+        .getCurrentUserInfo()
+        .subscribe(info => {
+          this.email = info.email;
+          this.initForm();
+        })
+    );
+  }
+
+  initForm() {
     this.form = this.fb.group({
       oldPassword: [null, [Validators.required, Validators.minLength(8)]],
       newPassword1: [null, [Validators.required, Validators.minLength(8)]],
@@ -55,7 +72,25 @@ export class EditPasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log('VALID');
+    const data = this.form.value;
+    this.subs.add(
+      this.firebaseService.reSignInWithCredential(
+        this.firebaseService.getNewCredentialsByEmailAndPassword(this.email, data.oldPassword)
+      ).subscribe(
+        response => this.editPassword(data.newPassword1),
+        error => this.generalService.showSnackBar('Cannot change your password.')
+      )
+    );
+  }
+
+  editPassword(password) {
+    this.subs.add(
+      this.firebaseService.editCurrentUserPassword(password)
+        .subscribe(
+          response => this.generalService.showSnackBar('Password changed correctly.'),
+          error => this.generalService.showSnackBar('Cannot change your password.')
+        )
+    );
   }
 
   ngOnDestroy() {
