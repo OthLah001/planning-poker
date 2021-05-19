@@ -80,6 +80,19 @@ export class FirebaseService {
     );
   }
 
+  getCurrentUserInfo(): Observable<any> {
+    return from(
+      this.auth.currentUser.then(
+        user => {
+          return {
+            email: user.email,
+            displayName: user.displayName
+          }
+        }
+      )
+    );
+  }
+
   logOutCurrentUser(): Observable<any> {
     return from(this.auth.signOut());
   }

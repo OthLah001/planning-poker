@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { emailPattern } from 'src/app/modules/user/utils/user.patterns';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'personal-info',
@@ -15,13 +17,15 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private firebaseService: FirebaseService,
+    private generalService: GeneralService
   ) {}
 
   ngOnInit() {
-    // TO-DO: get email and display name
-
-    this.initForm('email@example.com', 'Scrum master');
+    this.subs.add(
+      this.firebaseService.getCurrentUserInfo().subscribe(info => this.initForm(info.email, info.displayName))
+    );
   }
 
   initForm(email, displayName) {
@@ -42,7 +46,14 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log('VALID');
+    this.subs.add(
+      this.firebaseService
+        .updateCurrentUserProfile(this.form.value.displayName)
+        .subscribe(
+          response => this.generalService.showSnackBar('Display name has been modified successfully.'),
+          error => this.generalService.showSnackBar('Cannot modify your display name.')
+        )
+    );
   }
 
   ngOnDestroy() {
