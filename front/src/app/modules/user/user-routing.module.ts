@@ -4,6 +4,7 @@ import { SettingsComponent } from "src/app/modules/user/components/settings/sett
 import { PersonalInfoComponent } from "src/app/modules/user/components/personal-info/personal-info.component";
 import { EditPasswordComponent } from "src/app/modules/user/components/edit-password/edit-password.component";
 import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
+import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 
 export const userRoutes: Routes = [
@@ -19,6 +20,12 @@ export const userRoutes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+    canActivate: [
+      AngularFireAuthGuard
+    ],
+    data: {
+      authGuardPipe: () => redirectUnauthorizedTo(['/user/login'])
+    },
     children: [
       {
         path: '',
