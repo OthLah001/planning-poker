@@ -97,7 +97,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   sendVerificationEmail() {
     this.subs.add(
-      this.firebaseService.sendVerificationEmailToCCurrentUser().subscribe(
+      this.firebaseService.sendVerificationEmailToCurrentUser().subscribe(
         sucess => this.stillInCreation = false,
         error => {
           this.generalService.showSnackBar('An error has been occured while sending you an email activation.');

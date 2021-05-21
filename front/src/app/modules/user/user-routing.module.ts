@@ -5,6 +5,8 @@ import { PersonalInfoComponent } from "src/app/modules/user/components/personal-
 import { EditPasswordComponent } from "src/app/modules/user/components/edit-password/edit-password.component";
 import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-email/verify-email.component';
+import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
 
 
 export const userRoutes: Routes = [
@@ -45,5 +47,13 @@ export const userRoutes: Routes = [
         component: PaymentInfoComponent
       }
     ]
+  },
+  {
+    path: 'verify-email',
+    component: VerifyEmailComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
   }
 ];

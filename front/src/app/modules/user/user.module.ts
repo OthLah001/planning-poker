@@ -13,6 +13,8 @@ import { PersonalInfoComponent } from "src/app/modules/user/components/personal-
 import { IonicModule } from "@ionic/angular";
 import { EditPasswordComponent } from "src/app/modules/user/components/edit-password/edit-password.component";
 import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
+import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-email/verify-email.component';
+import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
 
 @NgModule({
   imports: [
@@ -31,7 +33,9 @@ import { PaymentInfoComponent } from "src/app/modules/user/components/payment-in
     SettingsComponent,
     PersonalInfoComponent,
     EditPasswordComponent,
-    PaymentInfoComponent
+    PaymentInfoComponent,
+    VerifyEmailComponent,
+    LogoutComponent
   ],
   providers: [
     
