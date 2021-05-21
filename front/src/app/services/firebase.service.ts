@@ -7,7 +7,6 @@ import {
   QuerySnapshot,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import firebase from 'firebase/app';
 
 @Injectable({
@@ -60,6 +59,14 @@ export class FirebaseService {
     return this.db.collection(collection).add(model);
   }
 
+  checkIfUserConnected(): Observable<boolean> {
+    return from(
+      this.auth.currentUser.then(
+        user => !!user
+      )
+    );
+  }
+
   signUp(email: string, password: string): Observable<any> {
     return from(this.auth.createUserWithEmailAndPassword(email, password));
   }
@@ -72,7 +79,7 @@ export class FirebaseService {
     );
   }
 
-  sendVerificationEmailToCCurrentUser(): Observable<any> {
+  sendVerificationEmailToCurrentUser(): Observable<any> {
     return from(
       this.auth.currentUser.then(
         user => user.sendEmailVerification()
@@ -110,6 +117,12 @@ export class FirebaseService {
       this.auth.currentUser.then(
         user => user.updatePassword(password)
       )
+    );
+  }
+
+  verifyEmailwithCode(code: string): Observable<any> {
+    return from(
+      this.auth.applyActionCode(code)
     );
   }
 

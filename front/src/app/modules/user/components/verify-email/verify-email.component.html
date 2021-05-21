@@ -1,0 +1,7 @@
+<ion-content>
+  <h1 *ngIf="isVerified">Email verified successfully</h1>
+
+  <h1 *ngIf="isError">Sorry there has been an error, please try again or <a (click)="checkConnectivityBeforeSendEmail()">resend new link</a></h1>
+
+  <h1 *ngIf="isResendLink">New verification link is sent.</h1>
+</ion-content>
