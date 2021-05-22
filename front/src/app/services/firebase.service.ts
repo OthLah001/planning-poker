@@ -126,6 +126,18 @@ export class FirebaseService {
     );
   }
 
+  sendResetPasswordEmail(email: string): Observable<any> {
+    return from(
+      this.auth.sendPasswordResetEmail(email)
+    )
+  }
+
+  resetPassword(code: string, password: string): Observable<any> {
+    return from(
+      this.auth.confirmPasswordReset(code, password)
+    );
+  }
+
   logOutCurrentUser(): Observable<any> {
     return from(this.auth.signOut());
   }
