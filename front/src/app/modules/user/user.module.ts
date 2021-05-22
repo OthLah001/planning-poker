@@ -15,6 +15,8 @@ import { EditPasswordComponent } from "src/app/modules/user/components/edit-pass
 import { PaymentInfoComponent } from "src/app/modules/user/components/payment-info/payment-info.component";
 import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-email/verify-email.component';
 import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
+import { ResetPasswordComponent } from "src/app/modules/user/components/reset-password/reset-password.component";
+import { EmailLinkComponent } from "src/app/modules/user/components/email-link/email-link.component";
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import { LogoutComponent } from "src/app/modules/user/components/logout/logout.c
     EditPasswordComponent,
     PaymentInfoComponent,
     VerifyEmailComponent,
-    LogoutComponent
+    LogoutComponent,
+    ResetPasswordComponent,
+    EmailLinkComponent
   ],
   providers: [
     
