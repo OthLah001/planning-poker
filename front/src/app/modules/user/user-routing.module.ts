@@ -7,6 +7,7 @@ import { PaymentInfoComponent } from "src/app/modules/user/components/payment-in
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-email/verify-email.component';
 import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
+import { LoginComponent } from "./components/login/login.component";
 
 
 export const userRoutes: Routes = [
@@ -18,6 +19,10 @@ export const userRoutes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'settings',

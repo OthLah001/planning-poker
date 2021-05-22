@@ -16,7 +16,7 @@ export class FirebaseService {
   constructor(
     private db: AngularFirestore,
     private auth: AngularFireAuth
-  ) {}
+  ) { }
 
   /*
        FireStore documentation https://firebase.google.com/docs/firestore/query-data/get-data
@@ -69,6 +69,10 @@ export class FirebaseService {
 
   signUp(email: string, password: string): Observable<any> {
     return from(this.auth.createUserWithEmailAndPassword(email, password));
+  }
+
+  SignIn(email: string, password: string): Promise<firebase.auth.UserCredential> {
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   updateCurrentUserProfile(displayName: string): Observable<any> {
