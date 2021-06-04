@@ -29,8 +29,6 @@ export class SignupComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // TO-DO: check if already logged in (cookies)
-
     this.form = this.formBuilder.group({
       email: [null, {
         validators: [Validators.required, Validators.pattern(emailPattern)],
