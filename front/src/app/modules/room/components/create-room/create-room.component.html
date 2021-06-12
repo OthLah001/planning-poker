@@ -1,0 +1,25 @@
+<h1 *ngIf="!dataLoaded">Loading...</h1>
+
+<form *ngIf="dataLoaded" [formGroup]="form">
+  <mat-form-field appearance="standard">
+    <mat-label>Room name</mat-label>
+    <input type="text" matInput required placeholder="Planning 001..." formControlName="name" />
+    <mat-error *ngIf="form.get('name').hasError('required') && form.get('name').touched">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-label>Voting system</mat-label>
+    <mat-select formControlName="votingSystemId" required>
+      <mat-option *ngFor="let sys of VotingSystems" [value]="sys.id">{{ sys.name }} ({{ sys.points }})</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('votingSystemId').hasError('required') && form.get('votingSystemId').touched">
+      This field is required
+    </mat-error>
+  </mat-form-field>
+
+  <div>
+    <button mat-flat-button color="primary" (click)="submit()">Sign up</button>
+  </div>
+</form>
