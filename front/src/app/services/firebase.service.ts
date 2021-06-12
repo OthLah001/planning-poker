@@ -93,7 +93,8 @@ export class FirebaseService {
         user => {
           return {
             email: user.email,
-            displayName: user.displayName
+            displayName: user.displayName,
+            id: user.uid
           }
         }
       )
