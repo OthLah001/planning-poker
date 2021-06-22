@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import {
   AngularFirestore,
-  DocumentReference,
   QueryDocumentSnapshot,
   QuerySnapshot,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import firebase from 'firebase/app';
 
 @Injectable({
@@ -48,6 +48,16 @@ export class FirebaseService {
       .get();
   }
 
+  getDocumentSnapshot(
+    collection: string,
+    document: string
+  ): Observable<any> {
+    return this.db
+      .collection(collection).doc(document).snapshotChanges().pipe(
+        map(action => action.payload.data())
+      );
+  }
+
   getDocument(
     collection: string,
     document: string
@@ -55,8 +65,10 @@ export class FirebaseService {
     return this.db.collection(collection).doc(document).get();
   }
 
-  setDocument(collection: string, model: any): Promise<DocumentReference<any>> {
-    return this.db.collection(collection).add(model);
+  
+
+  addOrSetDocument(collection: string, model: any, docId: string = null): Promise<any> {
+    return docId ? this.db.collection(collection).doc(docId).set(model) : this.db.collection(collection).add(model);
   }
 
   checkIfUserConnected(): Observable<boolean> {
@@ -91,7 +103,7 @@ export class FirebaseService {
     return from(
       this.auth.currentUser.then(
         user => {
-          return {
+          return !user ? null : {
             email: user.email,
             displayName: user.displayName,
             id: user.uid

@@ -59,18 +59,32 @@ export class CreateRoomComponent implements OnInit, OnDestroy {
       return;
     }
 
+    let scrumParticipantInfo;
+    if (localStorage.getItem('participantInfo'))  
+      scrumParticipantInfo = JSON.parse(localStorage.getItem('participantInfo'));
+    else {
+      scrumParticipantInfo = {
+        id: uuid(),
+        name: this.currentUser.displayName,
+        joinDate: new Date()
+      }
+    }
+
     const room = {
       ...this.form.value,
       creationDate: new Date(),
-      scrumMaster: this.currentUser.id,
-      participants: [],
+      scrumMasterId: this.currentUser.id,
+      participants: [scrumParticipantInfo],
       rounds: [],
       isClosed: false
     }
     this.subs.add(
-      from(this.firebaseService.setDocument('Rooms', room))
+      from(this.firebaseService.addOrSetDocument('Rooms', room, room.id))
         .subscribe(
-          data => this.router.navigateByUrl(`/room/${room.id}`),
+          data => {
+            localStorage.setItem('participantInfo', JSON.stringify(scrumParticipantInfo));
+            this.router.navigateByUrl(`/room/${room.id}`);
+          },
           error => this.generalService.showSnackBar('Cannot create this room. Please try again later.')
         )
     );
