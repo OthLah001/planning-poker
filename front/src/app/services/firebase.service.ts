@@ -79,6 +79,10 @@ export class FirebaseService {
     );
   }
 
+  login(email: string, password: string): Observable<any> {
+    return from(this.auth.signInWithEmailAndPassword(email, password));
+  }
+
   signUp(email: string, password: string): Observable<any> {
     return from(this.auth.createUserWithEmailAndPassword(email, password));
   }

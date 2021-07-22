@@ -9,17 +9,28 @@ import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-ema
 import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
 import { ResetPasswordComponent } from "src/app/modules/user/components/reset-password/reset-password.component";
 import { EmailLinkComponent } from "src/app/modules/user/components/email-link/email-link.component";
+import { LoginComponent } from "src/app/modules/user/components/login/login.component";
 
 
 export const userRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'signup',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: 'signup',
     component: SignupComponent,
+    canActivate: [
+      AngularFireAuthGuard
+    ],
+    data: {
+      authGuardPipe: () => redirectLoggedInTo(['/user/settings']) // TO-DO: change it
+    }
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
     canActivate: [
       AngularFireAuthGuard
     ],
