@@ -17,6 +17,7 @@ import { VerifyEmailComponent } from 'src/app/modules/user/components/verify-ema
 import { LogoutComponent } from "src/app/modules/user/components/logout/logout.component";
 import { ResetPasswordComponent } from "src/app/modules/user/components/reset-password/reset-password.component";
 import { EmailLinkComponent } from "src/app/modules/user/components/email-link/email-link.component";
+import { LoginComponent } from "src/app/modules/user/components/login/login.component";
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { EmailLinkComponent } from "src/app/modules/user/components/email-link/e
     VerifyEmailComponent,
     LogoutComponent,
     ResetPasswordComponent,
-    EmailLinkComponent
+    EmailLinkComponent,
+    LoginComponent
   ],
   providers: [
     
