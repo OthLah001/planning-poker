@@ -1,0 +1,37 @@
+<ion-content *ngIf="dataLoaded">
+  <form [formGroup]="form">
+    <p *ngIf="hasLoginInError">Incorrect email or password. please try again!</p>
+    <mat-form-field appearance="standard">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput required placeholder="email@example.com" formControlName="email" />
+      <mat-error *ngIf="form.get('email').hasError('required') && form.get('email').touched">
+        This field is required
+      </mat-error>
+      <mat-error *ngIf="form.get('email').hasError('pattern') && form.get('email').touched">
+        Invalid email
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-label>Password</mat-label>
+      <input [type]="hidePassword ? 'password' : 'text'" matInput required formControlName="password" />
+      <mat-icon matSuffix class="input-icon" (click)="showHidePassword()">
+        {{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      <mat-error *ngIf="form.get('password').hasError('required') && form.get('password').touched">
+        This field is required
+      </mat-error>
+      <mat-error *ngIf="form.get('password').hasError('minlength') && form.get('password').touched">
+        A password must contain at least 8 characters
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button mat-flat-button color="primary" (click)="submit()">Log in</button>
+    </div>
+
+    <div>
+      <a color="primary" routerLink="/user/reset-password">Forget password?</a>
+      <a color="primary" routerLink="/user/signup">Create an account</a>
+    </div>
+  </form>
+</ion-content>
