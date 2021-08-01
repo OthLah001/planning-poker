@@ -22,6 +22,8 @@ export class RoomGameComponent implements OnInit, OnDestroy {
   public isScrumMaster: boolean = false;
   public participantInfo: IParticipant;
 
+  public dataLoaded: boolean = false;
+
   constructor(
     private firebaseService: FirebaseService,
     private activatedRoute: ActivatedRoute,
@@ -40,6 +42,8 @@ export class RoomGameComponent implements OnInit, OnDestroy {
           if (room) {
             this.room = room;
             if (this.firstLoad) this.loadInfo();
+
+            this.dataLoaded = true;
           } else {
             this.router.navigateByUrl(`/room/new`);
           }
@@ -52,10 +56,9 @@ export class RoomGameComponent implements OnInit, OnDestroy {
     this.subs.add(
       this.firebaseService
         .getCurrentUserInfo()
-        .subscribe((user: ICurrentUserInfo) => {
+        .subscribe((user: ICurrentUserInfo) => { // TO-DO: manage when refresh, user doesn't load rapidlly
           this.currentUser = user;
-          this.isScrumMaster = user?.id === this.room.scrumMaster;
-
+          this.isScrumMaster = user?.id === this.room.scrumMasterId;
           this.manageParticipant();
         })
     );
@@ -94,10 +97,13 @@ export class RoomGameComponent implements OnInit, OnDestroy {
             this.addParticipant(localParticipantInfo);
           })
       )
+    } else {
+      this.participantInfo = localParticipantInfo;
     }
   }
 
   addParticipant(participant) {
+    this.participantInfo = participant;
     localStorage.setItem('participantInfo', JSON.stringify(participant));
     this.room.participants.push(participant);
     this.firebaseService.addOrSetDocument('Rooms', this.room, this.roomId);

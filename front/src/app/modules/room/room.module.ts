@@ -11,11 +11,16 @@ import { CommonModule } from "@angular/common";
 import { RoomGameComponent } from "src/app/modules/room/components/room-game/room-game.component";
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { NewParticipantDialogComponent } from "src/app/modules/room/components/dialogs/new-participant-dialog/new-participant-dialog.component";
+import { RoomHeaderComponent } from "src/app/modules/room/components/room-header/room-header.component";
+import { IonicModule } from "@ionic/angular";
+import { InvitePeopleDialogComponent } from "src/app/modules/room/components/dialogs/invite-people-dialog/invite-people-dialog.component";
+import { LeaveRoomDialogComponent } from "src/app/modules/room/components/dialogs/leave-room-dialog/leave-room-dialog.component";
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(roomRoutes),
+    IonicModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -27,10 +32,12 @@ import { NewParticipantDialogComponent } from "src/app/modules/room/components/d
   declarations: [
     CreateRoomComponent,
     RoomGameComponent,
-    NewParticipantDialogComponent
+    NewParticipantDialogComponent,
+    RoomHeaderComponent,
+    InvitePeopleDialogComponent,
+    LeaveRoomDialogComponent
   ],
   providers: [
-    
   ],
 })
 export class RoomModule {}

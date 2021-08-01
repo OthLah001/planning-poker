@@ -3,7 +3,7 @@ export interface IRoom {
   name: string;
   creationDate: IFirebaseDate;
   participants: IParticipant[];
-  scrumMaster: string;
+  scrumMasterId: string;
   isClosed: boolean;
   rounds: IRound[];
   votingSystemId: string;
