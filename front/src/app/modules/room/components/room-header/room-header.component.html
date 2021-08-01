@@ -1,0 +1,22 @@
+<div>
+  <div>
+    <p>{{ room?.name }}</p>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Voting system</mat-label>
+      <mat-select [value]="room?.votingSystemId" (selectionChange)="changeVotingSystem($event.value)" [disabled]="!isScrumMaster">
+        <mat-option *ngFor="let sys of VotingSystems" [value]="sys.id">{{ sys.name }} ({{ sys.points }})</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <button mat-flat-button color="primary" (click)="openInvitationDialog()">Invite people</button>
+  </div>
+
+  <div>
+    <button mat-flat-button color="primary" (click)="leaveRoom()">Leave</button>
+  </div>
+</div>
