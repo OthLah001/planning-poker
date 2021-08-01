@@ -1,0 +1,9 @@
+<div>
+  <div>
+    <mat-form-field appearance="standard">
+      <mat-label>Link</mat-label>
+      <input type="text" matInput readonly [value]="roomUrl">
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="copyURL()">Copy</button>
+  </div>
+</div>
