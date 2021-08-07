@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { v4 as uuid } from 'uuid';
 import { VotingSystems } from 'src/app/modules/room/room.enums';
 import { GeneralService } from 'src/app/services/general.service';
+import { IParticipant, IRoom } from 'src/app/modules/room/room.models';
 
 @Component({
   selector: 'create-room',
@@ -92,6 +93,24 @@ export class CreateRoomComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             localStorage.setItem('participantInfo', JSON.stringify(scrumParticipantInfo));
+            this.createCurrentRound(room, scrumParticipantInfo);
+          },
+          error => this.generalService.showSnackBar('Cannot create this room. Please try again later.')
+        )
+    );
+  }
+
+  createCurrentRound(room: IRoom, participant: IParticipant) {
+    this.subs.add(
+      from(this.firebaseService.addOrSetDocument('CurrentRounds', {
+        roomId: room.id,
+        votes: [
+          { participantId: participant.id, point: null, votingDate: null }
+        ],
+        creationDate: new Date()
+      }, room.id))
+        .subscribe(
+          data => {
             this.router.navigateByUrl(`/room/${room.id}`);
           },
           error => this.generalService.showSnackBar('Cannot create this room. Please try again later.')

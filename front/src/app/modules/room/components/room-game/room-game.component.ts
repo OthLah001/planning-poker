@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { IParticipant, IRoom } from 'src/app/modules/room/room.models';
+import { IParticipant, IRoom, IRound } from 'src/app/modules/room/room.models';
 import { ICurrentUserInfo } from 'src/app/modules/user/user.model';
 import { v4 as uuid } from 'uuid';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ export class RoomGameComponent implements OnInit, OnDestroy {
   private roomId: string = null;
 
   public room: IRoom;
+  public currentRound: IRound;
   public isScrumMaster: boolean = false;
   public participantInfo: IParticipant;
 
@@ -36,18 +37,20 @@ export class RoomGameComponent implements OnInit, OnDestroy {
 
     if (!this.roomId) this.router.navigateByUrl(`/room/new`);
     this.subs.add(
-      this.firebaseService
-        .getDocumentSnapshot('Rooms', this.roomId)
-        .subscribe((room) => {
-          if (room) {
-            this.room = room;
-            if (this.firstLoad) this.loadInfo();
+      combineLatest([
+        this.firebaseService.getDocumentSnapshot('Rooms', this.roomId),
+        this.firebaseService.getDocumentSnapshot('CurrentRounds', this.roomId)
+      ]).subscribe(([room, currentRound]) => {
+        if (room) {
+          this.room = room;
+          this.currentRound = currentRound;
+          if (this.firstLoad) this.loadInfo();
 
-            this.dataLoaded = true;
-          } else {
-            this.router.navigateByUrl(`/room/new`);
-          }
-        })
+          this.dataLoaded = true;
+        } else {
+          this.router.navigateByUrl(`/room/new`);
+        }
+      })
     );
   }
 
@@ -80,14 +83,14 @@ export class RoomGameComponent implements OnInit, OnDestroy {
       )
     ) { // update with localStorage info
       this.addParticipant(localParticipantInfo);
-    } else if (!localParticipantInfo && this.currentUser) { // update with new id and user displayname
+    } else if (!localParticipantInfo && this.currentUser.id) { // update with new id and user displayname
       localParticipantInfo = {
         id: uuid(),
         name: this.currentUser.displayName,
         joinDate: new Date(),
       };
       this.addParticipant(localParticipantInfo);
-    } else if (!this.currentUser && !localParticipantInfo) { // update with new id and displayname
+    } else if (!this.currentUser.id && !localParticipantInfo) { // update with new id and displayname
       this.subs.add(
         this.matDialog
           .open(NewParticipantDialogComponent, { disableClose: true })
@@ -106,11 +109,19 @@ export class RoomGameComponent implements OnInit, OnDestroy {
     }
   }
 
-  addParticipant(participant) {
+  addParticipant(participant: IParticipant) {
     this.participantInfo = participant;
     localStorage.setItem('participantInfo', JSON.stringify(participant));
+
     this.room.participants.push(participant);
     this.firebaseService.addOrSetDocument('Rooms', this.room, this.roomId);
+
+    this.currentRound.votes.push({
+      participantId: participant.id,
+      point: null,
+      votingDate: null
+    });
+    this.firebaseService.addOrSetDocument('CurrentRounds', this.currentRound, this.roomId);
   }
 
   ngOnDestroy() {
