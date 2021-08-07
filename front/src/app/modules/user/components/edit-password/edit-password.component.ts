@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { GeneralService } from 'src/app/services/general.service';
@@ -24,15 +25,21 @@ export class EditPasswordComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
-    private generalService: GeneralService
+    private generalService: GeneralService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.subs.add(
       this.firebaseService
-        .getCurrentUserInfo()
-        .subscribe(info => {
-          this.email = info.email;
+        .getAuthState()
+        .subscribe(user => {
+          if (!user) {
+            this.router.navigateByUrl('/user/login');
+            return;
+          }
+
+          this.email = user.email;
           this.initForm();
         })
     );

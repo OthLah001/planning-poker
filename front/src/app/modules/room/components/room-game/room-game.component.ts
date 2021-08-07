@@ -55,10 +55,14 @@ export class RoomGameComponent implements OnInit, OnDestroy {
     this.firstLoad = false;
     this.subs.add(
       this.firebaseService
-        .getCurrentUserInfo()
-        .subscribe((user: ICurrentUserInfo) => { // TO-DO: manage when refresh, user doesn't load rapidlly
-          this.currentUser = user;
-          this.isScrumMaster = user?.id === this.room.scrumMasterId;
+        .getAuthState()
+        .subscribe((user) => { // TO-DO: manage when refresh, user doesn't load rapidlly
+          this.currentUser = {
+            id: user?.uid,
+            email: user?.email,
+            displayName: user?.displayName
+          };
+          this.isScrumMaster = this.currentUser.id === this.room.scrumMasterId;
           this.manageParticipant();
         })
     );
