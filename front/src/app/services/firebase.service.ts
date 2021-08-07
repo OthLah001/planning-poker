@@ -65,7 +65,9 @@ export class FirebaseService {
     return this.db.collection(collection).doc(document).get();
   }
 
-  
+  getAuthState(): Observable<firebase.User> {
+    return this.auth.authState;
+  }
 
   addOrSetDocument(collection: string, model: any, docId: string = null): Promise<any> {
     return docId ? this.db.collection(collection).doc(docId).set(model) : this.db.collection(collection).add(model);
@@ -99,20 +101,6 @@ export class FirebaseService {
     return from(
       this.auth.currentUser.then(
         user => user.sendEmailVerification()
-      )
-    );
-  }
-
-  getCurrentUserInfo(): Observable<any> {
-    return from(
-      this.auth.currentUser.then(
-        user => {
-          return !user ? null : {
-            email: user.email,
-            displayName: user.displayName,
-            id: user.uid
-          }
-        }
       )
     );
   }

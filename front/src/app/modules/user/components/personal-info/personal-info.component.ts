@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { emailPattern } from 'src/app/modules/user/utils/user.patterns';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -19,12 +20,21 @@ export class PersonalInfoComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private firebaseService: FirebaseService,
-    private generalService: GeneralService
+    private generalService: GeneralService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.subs.add(
-      this.firebaseService.getCurrentUserInfo().subscribe(info => this.initForm(info.email, info.displayName))
+      this.firebaseService
+        .getAuthState()
+        .subscribe(user => {
+          if (!user) {
+            this.router.navigateByUrl('/user/login');
+            return;
+          }
+          this.initForm(user.email, user.displayName)
+        })
     );
   }
 

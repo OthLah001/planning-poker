@@ -33,10 +33,19 @@ export class CreateRoomComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subs.add(
       this.firebaseService
-        .getCurrentUserInfo()
+        .getAuthState()
         .subscribe(
           user => {
-            this.currentUser = user;
+            if (!user) {
+              this.router.navigateByUrl('/user/login');
+              return;
+            }
+
+            this.currentUser = {
+              id: user.uid,
+              email: user.email,
+              displayName: user.displayName
+            }
             this.loadDate();
           }
         )
