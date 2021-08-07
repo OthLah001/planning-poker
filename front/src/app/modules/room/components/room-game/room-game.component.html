@@ -1,4 +1,7 @@
 <ion-content *ngIf="dataLoaded" >
   <room-header [room]='room' [isScrumMaster]="isScrumMaster" [participantInfo]="participantInfo"></room-header>
+  <hr style="height: 3px; background-color: brown;">
+  <room-cards [room]='room' [participantInfo]="participantInfo" [currentRound]="currentRound"></room-cards>
+  <hr style="height: 3px; background-color: brown;">
 </ion-content>
 

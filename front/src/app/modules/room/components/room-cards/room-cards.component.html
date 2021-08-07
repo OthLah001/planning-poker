@@ -1,0 +1,5 @@
+<div>
+  <div *ngFor='let card of cards; let i = index' (click)="choseCardIndex !== i && chooseCard(i, card)" class="card">
+    <b>{{ card }}</b>
+  </div>
+</div>
