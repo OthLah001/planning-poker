@@ -44,7 +44,16 @@ export class RoomGameComponent implements OnInit, OnDestroy {
         if (room) {
           this.room = room;
           this.currentRound = currentRound;
+
           if (this.firstLoad) this.loadInfo();
+          else if (this.currentRound.votes.findIndex(vote => vote.participantId === this.participantInfo.id) === -1) {
+            this.currentRound.votes.push({
+              participantId: this.participantInfo.id,
+              point: null,
+              votingDate: null
+            });
+            this.firebaseService.addOrSetDocument('CurrentRounds', this.currentRound, this.roomId);
+          }
 
           this.dataLoaded = true;
         } else {

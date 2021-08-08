@@ -107,7 +107,8 @@ export class CreateRoomComponent implements OnInit, OnDestroy {
         votes: [
           { participantId: participant.id, point: null, votingDate: null }
         ],
-        creationDate: new Date()
+        creationDate: new Date(),
+        showCards: false
       }, room.id))
         .subscribe(
           data => {

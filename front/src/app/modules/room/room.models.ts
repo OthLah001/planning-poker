@@ -19,6 +19,7 @@ export interface IRound {
   roomId: string;
   votes: IVote[];
   creationDate: IFirebaseDate;
+  showCards: boolean;
 }
 
 export interface IVote {
