@@ -21,8 +21,6 @@ export class RoomCardsComponent implements OnChanges, OnDestroy {
   public cards: string[] = [];
   public choseCardIndex: number = -1;
 
-  private subs: Subscription = new Subscription();
-
   constructor(
     private firebaseService: FirebaseService
   ) {}
@@ -45,6 +43,5 @@ export class RoomCardsComponent implements OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
   }
 }
