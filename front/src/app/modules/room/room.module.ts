@@ -16,6 +16,7 @@ import { IonicModule } from "@ionic/angular";
 import { InvitePeopleDialogComponent } from "src/app/modules/room/components/dialogs/invite-people-dialog/invite-people-dialog.component";
 import { LeaveRoomDialogComponent } from "src/app/modules/room/components/dialogs/leave-room-dialog/leave-room-dialog.component";
 import { RoomCardsComponent } from "src/app/modules/room/components/room-cards/room-cards.component";
+import { RoomTableComponent } from "src/app/modules/room/components/room-table/room-table.component";
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { RoomCardsComponent } from "src/app/modules/room/components/room-cards/r
     RoomHeaderComponent,
     InvitePeopleDialogComponent,
     LeaveRoomDialogComponent,
-    RoomCardsComponent
+    RoomCardsComponent,
+    RoomTableComponent
   ],
   providers: [
   ],

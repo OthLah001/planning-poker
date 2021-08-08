@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <button mat-flat-button color="primary" *ngIf="isScrumMaster && !currentRound.showCards" (click)="showCards()">Show cards</button>
+    <button mat-flat-button color="primary" *ngIf="isScrumMaster && currentRound.showCards" (click)="generateNewRound()">New round</button>
+  </div>
+
+  <div *ngFor="let vote of votes">
+    <div [class.choose-and-hide]="!currentRound.showCards && vote.point"
+      [class.not-choose]="!vote.point">
+      {{ currentRound.showCards ? vote.point : '' }}
+    </div>
+    <p>{{ vote.participantName }}</p>
+  </div>
+  <br>
+  <div *ngIf="currentRound.showCards">
+    <div *ngFor="let key of staticticKeys">
+      {{ key }} - {{ statistics[key] }}%
+    </div>
+  </div>
+</div>
