@@ -11,6 +11,11 @@ import { NewParticipantDialogComponent } from 'src/app/modules/room/components/d
 @Component({
   selector: 'room-game',
   templateUrl: './room-game.component.html',
+  styles: [`
+    .sidenav {
+      width: 80%;
+    }
+  `]
 })
 export class RoomGameComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();

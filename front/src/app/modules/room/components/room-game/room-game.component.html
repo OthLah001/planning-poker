@@ -1,8 +1,17 @@
 <ion-content *ngIf="dataLoaded" >
-  <room-header [room]='room' [isScrumMaster]="isScrumMaster" [participantInfo]="participantInfo"></room-header>
-  <hr style="height: 3px; background-color: brown;">
-  <room-cards [room]='room' [participantInfo]="participantInfo" [currentRound]="currentRound"></room-cards>
-  <hr style="height: 3px; background-color: brown;">
-  <room-table [room]="room" [isScrumMaster]="isScrumMaster" [currentRound]="currentRound"></room-table>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over" class="sidenav">
+      <room-history [room]="room"></room-history>
+    </mat-sidenav>
+
+    <room-header [room]='room' [isScrumMaster]="isScrumMaster" [participantInfo]="participantInfo"></room-header>
+    <hr style="height: 3px; background-color: brown;">
+    <room-cards [room]='room' [participantInfo]="participantInfo" [currentRound]="currentRound"></room-cards>
+    <hr style="height: 3px; background-color: brown;">
+    <room-table [room]="room" [isScrumMaster]="isScrumMaster" [currentRound]="currentRound"></room-table>
+    <hr style="height: 3px; background-color: brown;">
+    <button (click)="sidenav.toggle()">history</button>
+  </mat-sidenav-container>
 </ion-content>
 

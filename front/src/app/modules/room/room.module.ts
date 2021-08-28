@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { roomRoutes } from 'src/app/modules/room/room-routing.module';
 import { CreateRoomComponent } from "src/app/modules/room/components/create-room/create-room.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -17,6 +18,7 @@ import { InvitePeopleDialogComponent } from "src/app/modules/room/components/dia
 import { LeaveRoomDialogComponent } from "src/app/modules/room/components/dialogs/leave-room-dialog/leave-room-dialog.component";
 import { RoomCardsComponent } from "src/app/modules/room/components/room-cards/room-cards.component";
 import { RoomTableComponent } from "src/app/modules/room/components/room-table/room-table.component";
+import { RoomHistoryComponent } from "src/app/modules/room/components/room-history/room-history.component";
 
 @NgModule({
   imports: [
@@ -29,7 +31,8 @@ import { RoomTableComponent } from "src/app/modules/room/components/room-table/r
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSidenavModule
   ],
   declarations: [
     CreateRoomComponent,
@@ -39,7 +42,8 @@ import { RoomTableComponent } from "src/app/modules/room/components/room-table/r
     InvitePeopleDialogComponent,
     LeaveRoomDialogComponent,
     RoomCardsComponent,
-    RoomTableComponent
+    RoomTableComponent,
+    RoomHistoryComponent
   ],
   providers: [
   ],
