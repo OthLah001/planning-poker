@@ -1,0 +1,11 @@
+<div>
+  <div *ngFor="let round of roundsHistory">
+    <div *ngFor="let vote of round.votes">
+      <p>{{ vote.participant }}: {{ vote.point }}</p>
+    </div>
+    <div *ngFor="let key of round.statsKeys">
+      <p>{{ key }}: {{ round.stats[key] }}%</p>
+    </div>
+    <hr style="height: 2px; background-color: green;">
+  </div>
+</div>
